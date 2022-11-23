@@ -1,0 +1,35 @@
+name: "Synchronization jobs"
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+jobs:
+  sync_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1.19.2'
+      - name: Fetch latest data
+        name: wget
+        uses: wei/wget@v1
+        with:
+          args: -O input/domains https://trustpositif.kominfo.go.id/assets/db/domains
+      - name: Compile regular expression
+        run: go run main.go
+      - name: Test regular expression
+        run: go test main.go main_test.go -test.v -timeout 1h
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: ${{secrets.GIT_AUTHOR}}
+          author_email: ${{secrets.GIT_EMAIL}}
+          message: "Data update ${{steps.timestamp.outputs.time}}"
