@@ -32,7 +32,7 @@ func TestRegexResult(t *testing.T) {
 
 	t.Log("Compiling regex...")
 	regex := string(regexFile)
-	matcher := regexp2.MustCompile(regex, 0)
+	matcher := regexp2.MustCompile(regex, 1)
 	t.Log("Starting validation...")
 
 	for scanner.Scan() {
