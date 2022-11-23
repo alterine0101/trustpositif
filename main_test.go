@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"io/ioutil"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/dlclark/regexp2"
@@ -53,6 +54,22 @@ func TestRegexResult(t *testing.T) {
 			t.Logf("%d out of %d correct (%.2f percent)", correct, domains, float32(correct)/float32(domains)*100)
 		}
 	}
+
+	t.Logf("%d out of %d correct (%.2f percent)", correct, domains, float32(correct)/float32(domains)*100)
+	outputFile, err := os.Create("output/undetected.txt")
+
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+	_, err3 := outputFile.WriteString(strings.Join(undetected, "\n"))
+
+	if err3 != nil {
+		t.Log(err3)
+		t.Fail()
+	}
+
 	inputFile.Close()
+	outputFile.Close()
 	t.Log("done")
 }
