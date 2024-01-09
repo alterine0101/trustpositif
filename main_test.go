@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"io/ioutil"
 	"os"
 	"strings"
 	"testing"
@@ -14,7 +13,7 @@ func TestRegexResult(t *testing.T) {
 	/* Stage 1: Import all domains list */
 	t.Log("Opening file...")
 	inputFile, err := os.Open("input/domains")
-	regexFile, err2 := ioutil.ReadFile("output/regex.txt")
+	regexFile, err2 := os.ReadFile("output/regex.txt")
 	if err != nil {
 		t.Log(err.Error())
 		t.Fail()
@@ -78,7 +77,7 @@ func TestReverseRegexResult(t *testing.T) {
 	/* Stage 1: Import all domains list */
 	t.Log("Opening file...")
 	inputFile, err := os.Open("input/domains")
-	regexFile, err2 := ioutil.ReadFile("output/regex-reversed.txt")
+	regexFile, err2 := os.ReadFile("output/regex-reversed.txt")
 	if err != nil {
 		t.Log(err.Error())
 		t.Fail()
@@ -102,7 +101,7 @@ func TestReverseRegexResult(t *testing.T) {
 
 	for scanner.Scan() {
 		domain := scanner.Text()
-		val, err := matcher.MatchString(reverse(domain))
+		val, err := matcher.MatchString(Reverse(domain))
 		if val {
 			correct++
 		} else {

@@ -1,6 +1,11 @@
 # database pemblokiran [Trust+] dalam satu regex;
 aka. the whole [Trust+] database in one regular expression (#_ );
 
+> ![NOTE]
+> we recommend to use the **reverse-domain detection** for best performance: reverse the domain text (e.g. `example.com` &rarr; `moc.elpmaxe`) them match them with the one found in `output/regex-reversed.txt`;
+>
+> the original `regex.txt` will no longer be tested due to performance issues;
+
 ## motivation
 + i'm bored
 + i'm overpowered
